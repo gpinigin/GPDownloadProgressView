@@ -188,7 +188,7 @@
 
     CGMutablePathRef circlePath = CGPathCreateMutable();
     CGPathAddArc(circlePath, NULL, CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds),
-                 radius, startAngle, endAngle, YES);
+                 radius, startAngle, endAngle, NO);
 
     _progressBackgroundLayer.path = circlePath;
     CGPathRelease(circlePath);
@@ -307,6 +307,10 @@
     colorAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     
     [_progressBackgroundLayer addAnimation:colorAnimation forKey:@"colorAnimation"];
+}
+
+- (BOOL)isAnimating {
+    return _isSpinning;
 }
 
 - (void) startAnimating {

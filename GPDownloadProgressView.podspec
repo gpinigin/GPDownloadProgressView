@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'GPDownloadProgressView'
-  s.version      = '1.0.0'
+  s.version      = '1.0.1'
   s.summary      = 'An iOS7-inspired download progress view.'
   s.homepage     = 'https://github.com/gpinigin/GPDownloadProgressView'
   s.author             = { "Gleb Pinigin" => "gpinigin@gmail.com" }

@@ -36,6 +36,11 @@
 @property (nonatomic, assign, getter = isPaused) BOOL paused;
 
 /**
+ * Returns animation state
+ */
+- (BOOL)isAnimating;
+
+/**
  * Make the background layer to spin around its center.
  */
 - (void)startAnimating;
