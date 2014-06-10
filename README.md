@@ -9,6 +9,12 @@ This progress view is inspired by the download progress view in the Apple App St
 - Deployment Target iOS5.0+
 - ARC
 
+## In Action
+
+![Tap to download](images/Download-image.png)
+![Tap to resume](images/Paused-image.png)
+![Tap to pause](images/Resumed-image.png)
+
 ## Installation
 
 The recommended way is to use [CocoaPods](http://cocoapods.org/) package manager.
