@@ -24,6 +24,8 @@
 #define kStopSizeRatio  .3
 #define kTickWidthRatio .3
 
+#define PaddingKey @"padding"
+
 @interface GPDownloadProgressView() {
     CAShapeLayer *_progressBackgroundLayer;
     CAShapeLayer *_progressLayer;
@@ -169,7 +171,7 @@
 - (void)drawProgress {
     CGFloat startAngle = - (M_PI_2);
     CGFloat endAngle = startAngle + (2 * M_PI * self.progress);
-    CGFloat radius = (self.bounds.size.width - 3 * _lineWidth) / 2.0;
+    CGFloat radius = 0.5f * self.bounds.size.width - 1.5f * _lineWidth - _padding;
 
     CGMutablePathRef progressPath = CGPathCreateMutable();
     CGPathAddArc(progressPath, NULL, CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds),
@@ -184,7 +186,7 @@
 
     CGFloat koef = partial? 1.8f: 2.f;
     CGFloat endAngle = (koef * M_PI) + startAngle;
-    CGFloat radius = (self.bounds.size.width - _lineWidth)/2;
+    CGFloat radius = 0.5 * self.bounds.size.width - _lineWidth - _padding;
 
     CGMutablePathRef circlePath = CGPathCreateMutable();
     CGPathAddArc(circlePath, NULL, CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds),
@@ -230,9 +232,8 @@
 }
 
 - (void) drawStop {
-    CGFloat radius = (self.bounds.size.width)/2;
-    CGFloat ratio = kStopSizeRatio;
-    CGFloat sideSize = self.bounds.size.width * ratio;
+    CGFloat radius = 0.5f * self.bounds.size.width - _padding;
+    CGFloat sideSize = 2 * radius * kStopSizeRatio;
     
     UIBezierPath *stopPath = [UIBezierPath bezierPath];
     [stopPath moveToPoint:CGPointMake(0, 0)];
@@ -242,7 +243,8 @@
     [stopPath closePath];
     
     // ...and move it into the right place.
-    [stopPath applyTransform:CGAffineTransformMakeTranslation(radius * (1-ratio), radius* (1-ratio))];
+    NSInteger translation = (1 - kStopSizeRatio) * radius + _padding + 0.5;
+    [stopPath applyTransform:CGAffineTransformMakeTranslation(translation, translation)];
     
     [_iconLayer setPath:stopPath.CGPath];
     [_iconLayer setStrokeColor:_progressLayer.strokeColor];
@@ -250,9 +252,8 @@
 }
 
 - (void)drawPlay {
-    CGFloat radius = (self.bounds.size.width)/2;
-    CGFloat ratio = kStopSizeRatio;
-    CGFloat sideSize = self.bounds.size.width * ratio;
+    CGFloat radius = 0.5f * self.bounds.size.width - _padding;
+    CGFloat sideSize = 2 * radius * kStopSizeRatio;
 
     UIBezierPath *stopPath = [UIBezierPath bezierPath];
     [stopPath moveToPoint:CGPointMake(0, 0)];
@@ -261,7 +262,8 @@
     [stopPath closePath];
 
     // ...and move it into the right place.
-    [stopPath applyTransform:CGAffineTransformMakeTranslation(radius * (1-ratio), radius* (1-ratio))];
+    NSInteger translation = (1 - kStopSizeRatio) * radius + _padding + 1;
+    [stopPath applyTransform:CGAffineTransformMakeTranslation(translation, translation)];
 
     [_iconLayer setPath:stopPath.CGPath];
     [_iconLayer setStrokeColor:_progressLayer.strokeColor];
@@ -269,12 +271,10 @@
 }
 
 - (void) drawArrow {
-    CGFloat radius = (self.bounds.size.width)/2;
-    CGFloat ratio = kArrowSizeRatio;
-    CGFloat segmentSize = self.bounds.size.width * ratio;
+    CGFloat radius = 0.5f * self.bounds.size.width - _padding;
+    CGFloat segmentSize = 2 * radius * kArrowSizeRatio;
 
     // Draw icon
-    
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(0.0, 0.0)];
     [path addLineToPoint:CGPointMake(segmentSize * 2.0, 0.0)];
@@ -286,8 +286,9 @@
     [path addLineToPoint:CGPointMake(0.0, 0.0)];
     [path closePath];
 
-    [path applyTransform:CGAffineTransformMakeTranslation(-segmentSize /2.0, -segmentSize / 1.2)];
-    [path applyTransform:CGAffineTransformMakeTranslation(radius * (1-ratio), radius* (1-ratio))];
+    [path applyTransform:CGAffineTransformMakeTranslation(-segmentSize / 2.0, -segmentSize / 1.2)];
+    NSInteger translation = (1 - kArrowSizeRatio) * radius + _padding;
+    [path applyTransform:CGAffineTransformMakeTranslation(translation, translation)];
     _iconLayer.path = path.CGPath;
     _iconLayer.fillColor = nil;
 }

@@ -30,6 +30,8 @@
  * The width of the line used to draw the progress view.
  **/
 @property (nonatomic, assign) CGFloat lineWidth;
+
+@property (nonatomic, assign) NSUInteger padding;
 @property (nonatomic, strong) UIColor *tintColor;
 @property (nonatomic, strong) UIColor *tickColor;
 
