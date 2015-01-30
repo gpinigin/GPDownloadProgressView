@@ -82,6 +82,9 @@
     _iconLayer.lineWidth = _lineWidth;
     _iconLayer.fillRule = kCAFillRuleNonZero;
     [self.layer addSublayer:_iconLayer];
+
+    self.isAccessibilityElement = YES;
+    self.accessibilityTraits = UIAccessibilityTraitButton;
 }
 
 #pragma mark - 
